@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		EA0213561C9B423700FCD311 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0213551C9B423700FCD311 /* AppDelegate.swift */; };
-		EA0213581C9B423700FCD311 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0213571C9B423700FCD311 /* ViewController.swift */; };
 		EA02135B1C9B423700FCD311 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA0213591C9B423700FCD311 /* Main.storyboard */; };
 		EA02135E1C9B423700FCD311 /* CollectionViewController.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EA02135C1C9B423700FCD311 /* CollectionViewController.xcdatamodeld */; };
 		EA0213601C9B423700FCD311 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EA02135F1C9B423700FCD311 /* Assets.xcassets */; };
 		EA0213631C9B423700FCD311 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EA0213611C9B423700FCD311 /* LaunchScreen.storyboard */; };
 		EA02136E1C9B423700FCD311 /* CollectionViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA02136D1C9B423700FCD311 /* CollectionViewControllerTests.swift */; };
 		EA0213791C9B423700FCD311 /* CollectionViewControllerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0213781C9B423700FCD311 /* CollectionViewControllerUITests.swift */; };
+		EA02138F1C9B58D800FCD311 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA02138E1C9B58D800FCD311 /* CollectionViewController.swift */; };
+		EA0213911C9B5B7D00FCD311 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0213901C9B5B7D00FCD311 /* CollectionViewCell.swift */; };
+		EA5945521CA07F0D00EFC395 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5945511CA07F0D00EFC395 /* ViewController.swift */; };
+		EA5945541CA08E6500EFC395 /* University.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5945531CA08E6500EFC395 /* University.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +40,6 @@
 /* Begin PBXFileReference section */
 		EA0213521C9B423700FCD311 /* CollectionViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CollectionViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0213551C9B423700FCD311 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EA0213571C9B423700FCD311 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EA02135A1C9B423700FCD311 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EA02135D1C9B423700FCD311 /* CollectionViewController.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CollectionViewController.xcdatamodel; sourceTree = "<group>"; };
 		EA02135F1C9B423700FCD311 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -49,6 +51,10 @@
 		EA0213741C9B423700FCD311 /* CollectionViewControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CollectionViewControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA0213781C9B423700FCD311 /* CollectionViewControllerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewControllerUITests.swift; sourceTree = "<group>"; };
 		EA02137A1C9B423700FCD311 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EA02138E1C9B58D800FCD311 /* CollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		EA0213901C9B5B7D00FCD311 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		EA5945511CA07F0D00EFC395 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EA5945531CA08E6500EFC395 /* University.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = University.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,11 +105,12 @@
 		EA0213541C9B423700FCD311 /* CollectionViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EA02138D1C9B58BE00FCD311 /* Controllers */,
+				EA0213861C9B45E100FCD311 /* Model */,
 				EA0213551C9B423700FCD311 /* AppDelegate.swift */,
-				EA0213571C9B423700FCD311 /* ViewController.swift */,
 				EA0213591C9B423700FCD311 /* Main.storyboard */,
-				EA02135F1C9B423700FCD311 /* Assets.xcassets */,
 				EA0213611C9B423700FCD311 /* LaunchScreen.storyboard */,
+				EA02135F1C9B423700FCD311 /* Assets.xcassets */,
 				EA0213641C9B423700FCD311 /* Info.plist */,
 				EA02135C1C9B423700FCD311 /* CollectionViewController.xcdatamodeld */,
 			);
@@ -126,6 +133,24 @@
 				EA02137A1C9B423700FCD311 /* Info.plist */,
 			);
 			path = CollectionViewControllerUITests;
+			sourceTree = "<group>";
+		};
+		EA0213861C9B45E100FCD311 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EA5945531CA08E6500EFC395 /* University.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		EA02138D1C9B58BE00FCD311 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EA02138E1C9B58D800FCD311 /* CollectionViewController.swift */,
+				EA0213901C9B5B7D00FCD311 /* CollectionViewCell.swift */,
+				EA5945511CA07F0D00EFC395 /* ViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,8 +288,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				EA02135E1C9B423700FCD311 /* CollectionViewController.xcdatamodeld in Sources */,
-				EA0213581C9B423700FCD311 /* ViewController.swift in Sources */,
+				EA0213911C9B5B7D00FCD311 /* CollectionViewCell.swift in Sources */,
+				EA5945521CA07F0D00EFC395 /* ViewController.swift in Sources */,
+				EA5945541CA08E6500EFC395 /* University.swift in Sources */,
 				EA0213561C9B423700FCD311 /* AppDelegate.swift in Sources */,
+				EA02138F1C9B58D800FCD311 /* CollectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +519,7 @@
 				EA02137F1C9B423700FCD311 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EA0213801C9B423700FCD311 /* Build configuration list for PBXNativeTarget "CollectionViewControllerTests" */ = {
 			isa = XCConfigurationList;
@@ -499,6 +528,7 @@
 				EA0213821C9B423700FCD311 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EA0213831C9B423700FCD311 /* Build configuration list for PBXNativeTarget "CollectionViewControllerUITests" */ = {
 			isa = XCConfigurationList;
@@ -507,6 +537,7 @@
 				EA0213851C9B423700FCD311 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
