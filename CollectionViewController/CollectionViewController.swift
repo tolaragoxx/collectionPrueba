@@ -11,8 +11,7 @@ import CoreData
 private let reuseIdentifier = "cell collection"
 private let cellShow = "showCell"
 class CollectionViewController: UICollectionViewController {
-    private let leftAndRightPaddings : CGFloat = 12.0
-    private let numberOfItemsPerRow: CGFloat = 2.0
+    @IBOutlet weak var menuButton: UIBarButtonItem!
     var universities = [NSManagedObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +22,20 @@ class CollectionViewController: UICollectionViewController {
         }else{
             getUniversities()
         }
-        
+        if revealViewController() != nil{
+            menuButton.target = revealViewController()
+            menuButton.action = "revealToggle:"
+        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
+    }
+    func configureCollectionView(){
+         let leftAndRightPaddings : CGFloat = 12.0
+         let numberOfItemsPerRow: CGFloat = 2.0
+        let width = (CGRectGetWidth(collectionView!.frame) / numberOfItemsPerRow) - leftAndRightPaddings
+        let layout = collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSizeMake(width, 1.5 * width)
     }
     func dowloadUniversities(){
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -51,6 +60,7 @@ class CollectionViewController: UICollectionViewController {
             }
             for(var i = 0;i < universities.count;i++){
                 guard let university = universities[i] as? NSDictionary else{
+                        print("could not get data on university",i+1)
                         break
                 }
                 self.saveUniversities(university)
@@ -62,8 +72,8 @@ class CollectionViewController: UICollectionViewController {
         task.resume()
     }
     func saveUniversities(university: NSDictionary){
-        let name = university.valueForKey("universityName") as? String
-        let id = university.valueForKey("id") as? String
+        if let name = university.valueForKey("universityName") as? String,
+            let id = university.valueForKey("id") as? String{
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let context: NSManagedObjectContext = appDel.managedObjectContext
         let entity = NSEntityDescription.entityForName("Universities", inManagedObjectContext: context)
@@ -76,6 +86,7 @@ class CollectionViewController: UICollectionViewController {
             print(name,id)
         } catch let error as NSError  {
             print("Could not save \(error), \(error.userInfo)")
+                }
         }
     }
     func getUniversities(){
@@ -88,11 +99,7 @@ class CollectionViewController: UICollectionViewController {
             print("Could not save \(error), \(error.userInfo)")
         }
     }
-    func configureCollectionView(){
-        let width = (CGRectGetWidth(collectionView!.frame) / numberOfItemsPerRow) - leftAndRightPaddings
-        let layout = collectionViewLayout as! UICollectionViewFlowLayout
-        layout.itemSize = CGSizeMake(width, 1.5 * width)
-    }
+    
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -113,17 +120,17 @@ class CollectionViewController: UICollectionViewController {
     
     // MARK: UICollectionViewDelegate
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.item)
-//        let university = universities[indexPath.item]
-//        print(university.valueForKey("id") as! String)
-//        
-//        self.performSegueWithIdentifier("showCell", sender: university)
+        let university = universities[indexPath.item]
+        print(indexPath.item,university.valueForKey("name") as! String,university.valueForKey("id") as! String)
+        self.performSegueWithIdentifier("showCell", sender: university)
+        
+        
     }
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "showCell"{
-//            if let vc = segue.destinationViewController as? ViewController{
-//                 vc.university = sender as? NSManagedObject
-//            }
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showCell"{
+            let tabBar = segue.destinationViewController as! UITabBarController
+            let vc = tabBar.childViewControllers[0] as! ViewController
+            vc.university = (sender as? NSManagedObject)
+        }
+    }
 }

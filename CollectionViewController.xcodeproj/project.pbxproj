@@ -18,6 +18,8 @@
 		EA0213911C9B5B7D00FCD311 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0213901C9B5B7D00FCD311 /* CollectionViewCell.swift */; };
 		EA5945521CA07F0D00EFC395 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5945511CA07F0D00EFC395 /* ViewController.swift */; };
 		EA5945541CA08E6500EFC395 /* University.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5945531CA08E6500EFC395 /* University.swift */; };
+		EA5E16711CA1E04A002A5450 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EA5E16701CA1E04A002A5450 /* SWRevealViewController.m */; };
+		EA5E16731CA1E225002A5450 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA5E16721CA1E225002A5450 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,10 @@
 		EA0213901C9B5B7D00FCD311 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		EA5945511CA07F0D00EFC395 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		EA5945531CA08E6500EFC395 /* University.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = University.swift; sourceTree = "<group>"; };
+		EA5E166E1CA1E049002A5450 /* CollectionViewController-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CollectionViewController-Bridging-Header.h"; sourceTree = "<group>"; };
+		EA5E166F1CA1E04A002A5450 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		EA5E16701CA1E04A002A5450 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		EA5E16721CA1E225002A5450 /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +111,7 @@
 		EA0213541C9B423700FCD311 /* CollectionViewController */ = {
 			isa = PBXGroup;
 			children = (
+				EA5E166D1CA1E036002A5450 /* Menu */,
 				EA02138D1C9B58BE00FCD311 /* Controllers */,
 				EA0213861C9B45E100FCD311 /* Model */,
 				EA0213551C9B423700FCD311 /* AppDelegate.swift */,
@@ -149,8 +156,19 @@
 				EA02138E1C9B58D800FCD311 /* CollectionViewController.swift */,
 				EA0213901C9B5B7D00FCD311 /* CollectionViewCell.swift */,
 				EA5945511CA07F0D00EFC395 /* ViewController.swift */,
+				EA5E16721CA1E225002A5450 /* TableViewController.swift */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		EA5E166D1CA1E036002A5450 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				EA5E166F1CA1E04A002A5450 /* SWRevealViewController.h */,
+				EA5E16701CA1E04A002A5450 /* SWRevealViewController.m */,
+				EA5E166E1CA1E049002A5450 /* CollectionViewController-Bridging-Header.h */,
+			);
+			name = Menu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,8 +305,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA5E16711CA1E04A002A5450 /* SWRevealViewController.m in Sources */,
 				EA02135E1C9B423700FCD311 /* CollectionViewController.xcdatamodeld in Sources */,
 				EA0213911C9B5B7D00FCD311 /* CollectionViewCell.swift in Sources */,
+				EA5E16731CA1E225002A5450 /* TableViewController.swift in Sources */,
 				EA5945521CA07F0D00EFC395 /* ViewController.swift in Sources */,
 				EA5945541CA08E6500EFC395 /* University.swift in Sources */,
 				EA0213561C9B423700FCD311 /* AppDelegate.swift in Sources */,
@@ -434,10 +454,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = CollectionViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.doapps.CollectionViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CollectionViewController/CollectionViewController-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -445,10 +468,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = CollectionViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.doapps.CollectionViewController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CollectionViewController/CollectionViewController-Bridging-Header.h";
 			};
 			name = Release;
 		};
