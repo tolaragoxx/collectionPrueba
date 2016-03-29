@@ -303,6 +303,11 @@ class CollectionViewController: UICollectionViewController {
         }
         return courses
     }
+    func alertaNoHayUniversidad(){
+        let alert = UIAlertController(title: "This university is not very important", message: "If you want this part confirm your suscription it just cost 199$, a bit for an user of iPhones", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+        presentViewController(alert, animated: true, completion: nil)
+    }
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -325,10 +330,14 @@ class CollectionViewController: UICollectionViewController {
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let university = universities[indexPath.item]
         print(indexPath.item,university.valueForKey("name") as! String,university.valueForKey("id") as! String)
-        let periods = periodsToSend(university)
-        let courses = coursesToSend(university)
-        let mandar = toSend(university: university, courses: courses, periods: periods)
-        self.performSegueWithIdentifier("showCell", sender: mandar)
+        if let nameOfUniversity = university.valueForKey("name") as? String where nameOfUniversity == "UNFV" || nameOfUniversity == "UNAC"{
+            alertaNoHayUniversidad()
+        }else{
+            let periods = periodsToSend(university)
+            let courses = coursesToSend(university)
+            let mandar = toSend(university: university, courses: courses, periods: periods)
+            self.performSegueWithIdentifier("showCell", sender: mandar)
+        }
     }
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == cellShow{
