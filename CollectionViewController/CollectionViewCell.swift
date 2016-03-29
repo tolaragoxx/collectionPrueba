@@ -12,7 +12,9 @@ class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var collectionImageView: UIImageView!
     func configureCellWith(university: NSManagedObject){
-        let name = university.valueForKey("name") as! String
-        self.collectionImageView.image = UIImage(named: name)
+        if let name = university.valueForKey("name") as? String{
+            self.collectionImageView.image = UIImage(named: name)
+        }
+        
     }
 }

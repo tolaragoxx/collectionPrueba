@@ -11,9 +11,9 @@ import CoreData
 private let reuseIdentifier = "cell collection"
 private let cellShow = "showCell"
 class toSend{
-    var university: NSManagedObject
-    var courses: [NSManagedObject]
-    var periods: [NSManagedObject]
+    var university: NSManagedObject!
+    var courses: [NSManagedObject]?
+    var periods: [NSManagedObject]?
     init(university: NSManagedObject,courses: [NSManagedObject],periods: [NSManagedObject]){
         self.university = university
         self.courses = courses
@@ -27,13 +27,13 @@ class CollectionViewController: UICollectionViewController {
     var universities = [NSManagedObject]()
     var periods = [NSManagedObject]()
     var courses = [NSManagedObject]()
+    let session = NSURLSession(configuration: NSURLSessionConfiguration.defaultSessionConfiguration())
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
         if !NSUserDefaults.standardUserDefaults().boolForKey("periods"){
-            self.initLoading()
             self.downloadPeriods()
-            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "periods")
         }else{
             getPeriods()
         }
@@ -44,6 +44,7 @@ class CollectionViewController: UICollectionViewController {
             getCourses()
         }
         if !NSUserDefaults.standardUserDefaults().boolForKey("universities"){
+             self.initLoading()
             self.downloadUniversities()
             NSUserDefaults.standardUserDefaults().setBool(true, forKey: "universities")
         }else{
@@ -76,40 +77,41 @@ class CollectionViewController: UICollectionViewController {
     
     //MARK: - Download Universities
     func downloadUniversities(){
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: configuration)
-        let url = NSURL(string: "http://107.170.194.145:3000/api/Universities")
-        let urlRequest = NSURLRequest(URL: url!)
-        let task = session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
-            guard let responseData = data else{
-                print("Not could get data")
-                return
-            }
-            guard error == nil else{
-                print(error?.localizedDescription)
-                return
-            }
-            var universities: NSArray
-            do{
-                universities = try NSJSONSerialization.JSONObjectWithData(responseData, options: []) as! NSArray
-            }catch let error as NSError{
-                print(error.localizedDescription)
-                return
-            }
-            for(var i = 0;i < universities.count;i++){
-                guard let university = universities[i] as? NSDictionary else{
-                        print("could not get data on university",i+1)
-                        break
+//        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+//        let session = NSURLSession(configuration: configuration)
+        if let url = NSURL(string: "http://107.170.194.145:3000/api/Universities"){
+            let urlRequest = NSURLRequest(URL: url)
+            let task = self.session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
+                guard let responseData = data else{
+                    print("Could not get data on Universities")
+                    return
                 }
-                self.saveUniversities(university)
+                guard error == nil else{
+                    print("There was an error in universities",error?.localizedFailureReason)
+                    return
+                }
+                var universities: NSArray
+                do{
+                    universities = try NSJSONSerialization.JSONObjectWithData(responseData, options: []) as! NSArray
+                }catch let error as NSError{
+                    print(error.localizedFailureReason)
+                    return
+                }
+                for(var i = 0;i < universities.count;i++){
+                    guard let university = universities[i] as? NSDictionary else{
+                           print("One of the universities could not be downloaded restart the application please")
+                            return
+                    }
+                    self.saveUniversities(university)
+                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.collectionView?.reloadData()
+                    self.loading.stopAnimating()
+                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                })
             }
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.collectionView?.reloadData()
-                self.loading.stopAnimating()
-                UIApplication.sharedApplication().endIgnoringInteractionEvents()
-            })
+                task.resume()
         }
-        task.resume()
     }
     func saveUniversities(university: NSDictionary){
         if let name = university.valueForKey("universityName") as? String,
@@ -125,7 +127,7 @@ class CollectionViewController: UICollectionViewController {
                 self.universities.append(newUniversity)
                 print(name,id)
             } catch let error as NSError  {
-                print("Could not save \(error), \(error.userInfo)")
+                print("Could not save a university \(error.localizedFailureReason)")
             }
         }
     }
@@ -136,38 +138,46 @@ class CollectionViewController: UICollectionViewController {
         do{
             self.universities = try context.executeFetchRequest(request) as! [NSManagedObject]
         }catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Could not retrieve universities \(error.localizedFailureReason)")
+
         }
     }
     //MARK: - Download Periods
     func downloadPeriods(){
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: configuration)
-        let url = NSURL(string: "http://107.170.194.145:3000/api/Periods")
-        let urlRequest = NSURLRequest(URL: url!)
-        let task = session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
-            guard let responseData = data else{
-                return
-            }
-            guard error == nil else{
-                print(error?.localizedDescription)
-                return
-            }
-            let periods: NSArray
-            do{
-                 periods = try NSJSONSerialization.JSONObjectWithData(responseData, options: []) as! NSArray
-            }catch let error as NSError{
-                print(error.localizedDescription)
-                return
-            }
-            for(var i = 0;i < periods.count;i++){
-                guard let period = periods[i] as? NSDictionary else{
-                    break
+//        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+//        let session = NSURLSession(configuration: configuration)
+        if let url = NSURL(string: "http://107.170.194.145:3000/api/Periods"){
+            let urlRequest = NSURLRequest(URL: url)
+            let task = self.session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
+                guard let responseData = data else{
+                    print("Could not get data in periods")
+                    return
                 }
-                self.savePeriods(period)
+                guard error == nil else{
+                    print("There was an error in periods",error?.localizedFailureReason)
+                    return
+                }
+                var periods: NSArray
+                do{
+                     periods = try NSJSONSerialization.JSONObjectWithData(responseData, options: []) as! NSArray
+                }catch let error as NSError{
+                    print(error.localizedFailureReason)
+                    return
+                }
+                for(var i = 0;i < periods.count;i++){
+                    guard let period = periods[i] as? NSDictionary else{
+                        print("One of the periods could not be downloaded restart the application please")
+                        return
+                    }
+                    self.savePeriods(period)
+                }
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: "periods")
             }
+            task.resume()
         }
-        task.resume()
+        else{
+            print("Could not download periods check the URL")
+        }
     }
     func savePeriods(period: NSDictionary){
         if let name = period.valueForKey("periodName") as? String,
@@ -185,8 +195,11 @@ class CollectionViewController: UICollectionViewController {
                     self.periods.append(newPeriod)
                     print(name,id,universityId)
                 } catch let error as NSError  {
-                    print("Could not save \(error), \(error.userInfo) \(error.localizedDescription)")
+                    print("Could not save a period \(error.localizedFailureReason)")
                 }
+        }
+        else{
+            print("Wrong data from a period")
         }
     }
     func getPeriods(){
@@ -196,38 +209,41 @@ class CollectionViewController: UICollectionViewController {
         do{
             self.periods = try context.executeFetchRequest(request) as! [NSManagedObject]
         }catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Could not retrieve periods \(error.localizedFailureReason)")
         }
     }
     //MARK: - Download Courses
     func downloadCourses(){
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session = NSURLSession(configuration: configuration)
-        let url = NSURL(string: "http://107.170.194.145:3000/api/Courses")
-        let urlRequest = NSURLRequest(URL: url!)
-        let task = session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
-            guard let responseData = data else{
-                return
-            }
-            guard error == nil else{
-                print(error?.localizedDescription)
-                return
-            }
-            let courses: NSArray
-            do{
-                courses = try NSJSONSerialization.JSONObjectWithData(responseData, options: []) as! NSArray
-            }catch let error as NSError{
-                print(error.localizedDescription)
-                return
-            }
-            for(var i = 0;i < courses.count;i++){
-                guard let course = courses[i] as? NSDictionary else{
-                    break
+//        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+//        let session = NSURLSession(configuration: configuration)
+        if let url = NSURL(string: "http://107.170.194.145:3000/api/Courses"){
+            let urlRequest = NSURLRequest(URL: url)
+            let task = self.session.dataTaskWithRequest(urlRequest) { (data, response, error) -> Void in
+                guard let responseData = data else{
+                    print("Could not get data in courses")
+                    return
                 }
-                self.saveCourses(course)
+                guard error == nil else{
+                    print("There was an error in courses",error?.localizedFailureReason)
+                    return
+                }
+                var courses: NSArray
+                do{
+                    courses = try NSJSONSerialization.JSONObjectWithData(responseData, options: []) as! NSArray
+                }catch let error as NSError{
+                    print(error.localizedFailureReason)
+                    return
+                }
+                for(var i = 0;i < courses.count;i++){
+                    guard let course = courses[i] as? NSDictionary else{
+                        print("One of the courses could not be downloaded restart the application please")
+                        return
+                    }
+                    self.saveCourses(course)
+                }
             }
+                task.resume()
         }
-        task.resume()
     }
     func saveCourses(course: NSDictionary){
         if let name = course.valueForKey("name") as? String,
@@ -245,7 +261,7 @@ class CollectionViewController: UICollectionViewController {
                     self.courses.append(newCourse)
                     print(name,id,universityId)
                 } catch let error as NSError  {
-                    print("Could not save \(error), \(error.userInfo)")
+                    print("Could not save a course \(error.localizedFailureReason)")
                 }
         }
     }
@@ -256,11 +272,11 @@ class CollectionViewController: UICollectionViewController {
         do{
             self.courses = try context.executeFetchRequest(request) as! [NSManagedObject]
         }catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Could not retrieve periods \(error.localizedFailureReason)")
         }
     }
 
-    
+    //MARK: - Pass data to ViewController
     func periodsToSend(university: NSManagedObject) -> [NSManagedObject]{
         let appDel: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let context: NSManagedObjectContext = appDel.managedObjectContext
@@ -270,7 +286,7 @@ class CollectionViewController: UICollectionViewController {
         do{
             periods = try context.executeFetchRequest(request) as! [NSManagedObject]
         }catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Could not retrieve periods with predicate \(error.localizedFailureReason)")
         }
         return periods
     }
@@ -283,7 +299,7 @@ class CollectionViewController: UICollectionViewController {
         do{
             courses = try context.executeFetchRequest(request) as! [NSManagedObject]
         }catch let error as NSError  {
-            print("Could not save \(error), \(error.userInfo)")
+            print("Could not retrieve courses with predicate \(error.localizedFailureReason)")
         }
         return courses
     }

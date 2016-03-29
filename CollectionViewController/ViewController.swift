@@ -19,12 +19,13 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
     var periodsPV = UIPickerView()
     var coursesPV = UIPickerView()
     var numbersPV = UIPickerView()
-    var periodos: [NSManagedObject]!
-    var courses: [NSManagedObject]!
+    var periodos: [NSManagedObject]?
+    var courses: [NSManagedObject]?
     var recibido: toSend!{
         didSet{
-            let university = recibido.university
-            self.title = university.valueForKey("name") as! String
+            if let universityName = recibido.university.valueForKey("name") as? String{
+                self.title = universityName
+            }
             self.periodos = recibido.periods
             self.courses = recibido.courses
         }
@@ -48,18 +49,22 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
         periodosTF.inputAccessoryView = toolbar
         coursesTF.inputAccessoryView = toolbar
         numberTF.inputAccessoryView = toolbar
-        
-        
-        
-        
-        
         self.trainingView.hidden = true
-        for periodo in periodos{
-            print(periodo.valueForKey("name") as? String)
+        if let periodosUnWrapped = periodos{
+            for periodo in periodosUnWrapped{
+                if let per = periodo.valueForKey("name") as? String{
+                    print(per)
+                }
+            }
         }
-        for course in courses{
-            print(course.valueForKey("name") as? String)
+        if let coursesUnWrapped = courses{
+            for course in coursesUnWrapped{
+                if let cour = course.valueForKey("name") as? String{
+                    print(cour)
+                }
+            }
         }
+        
         // Do any additional setup after loading the view.
     }
     func cancelButtonTapped(sender: UIBarButtonItem){
@@ -71,6 +76,7 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
 
     
     @IBAction func categoryTapped(sender: UISegmentedControl) {
+        self.view.endEditing(true)
         if sender.selectedSegmentIndex == 0{
             simulacroView.hidden = false
             trainingView.hidden = true
@@ -85,30 +91,38 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
     }
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
         if pickerView == periodsPV{
-            return periodos.count
+            if let periodosUnWrapped = periodos{
+                return periodosUnWrapped.count
+            }
         }else if pickerView == coursesPV{
-            return courses.count
-        }else{
-           return number.count
+            if let coursesUnWrapped = courses{
+                return coursesUnWrapped.count
+            }
         }
+        return number.count
     }
     //Delegate
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
         if pickerView == periodsPV{
-            return periodos[row].valueForKey("name") as! String
+            if let periodosUnWrapped = periodos{
+                return periodosUnWrapped[row].valueForKey("name") as! String
+            }
         }else if pickerView == coursesPV{
-            return courses[row].valueForKey("name") as! String
-        }else{
-            return number[row]
+            if let coursesUnWrapped = courses{
+                return coursesUnWrapped[row].valueForKey("name") as! String
+            }
         }
-
-        
+        return number[row]
     }
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int){
         if pickerView == periodsPV{
-            self.periodosTF.text = periodos[row].valueForKey("name") as! String
+            if let periodosUnWrapped = periodos{
+                self.periodosTF.text = periodosUnWrapped[row].valueForKey("name") as! String
+            }
         }else if pickerView == coursesPV{
-            self.coursesTF.text = courses[row].valueForKey("name") as! String
+            if let coursesUnWrapped = courses{
+                self.coursesTF.text = coursesUnWrapped[row].valueForKey("name") as! String
+            }
         }else{
             self.numberTF.text = number[row]
         }

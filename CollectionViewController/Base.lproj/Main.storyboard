@@ -188,6 +188,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <color key="backgroundColor" red="0.90588235289999997" green="0.90588235289999997" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="GEI-N5-khS" secondAttribute="trailing" id="Tfe-D9-yvC"/>
                                     <constraint firstItem="GEI-N5-khS" firstAttribute="top" secondItem="a09-6n-XYA" secondAttribute="top" id="gRz-LM-tcf"/>
