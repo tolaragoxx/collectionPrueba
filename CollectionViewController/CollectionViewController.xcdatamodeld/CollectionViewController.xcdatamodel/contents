@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Automatic">
+    <entity name="Courses" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="universityId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Periods" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="universityId" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="Universities" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Universities" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="Universities" positionX="-369" positionY="-210" width="128" height="73"/>
+        <element name="Periods" positionX="-245" positionY="-7" width="128" height="88"/>
+        <element name="Courses" positionX="-72" positionY="-198" width="128" height="88"/>
     </elements>
 </model>
