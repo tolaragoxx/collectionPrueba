@@ -32,6 +32,7 @@ class ViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelega
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Segundo esto")
         periodsPV.delegate = self
         periodsPV.dataSource = self
         coursesPV.delegate = self

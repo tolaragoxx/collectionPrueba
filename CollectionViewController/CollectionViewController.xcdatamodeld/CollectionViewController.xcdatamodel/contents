@@ -5,6 +5,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="universityId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Entity" syncable="YES"/>
     <entity name="Periods" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -15,8 +16,9 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Universities" positionX="-369" positionY="-210" width="128" height="73"/>
-        <element name="Periods" positionX="-245" positionY="-7" width="128" height="88"/>
         <element name="Courses" positionX="-72" positionY="-198" width="128" height="88"/>
+        <element name="Periods" positionX="-245" positionY="-7" width="128" height="88"/>
+        <element name="Universities" positionX="-369" positionY="-210" width="128" height="73"/>
+        <element name="Entity" positionX="-216" positionY="-90" width="128" height="45"/>
     </elements>
 </model>
